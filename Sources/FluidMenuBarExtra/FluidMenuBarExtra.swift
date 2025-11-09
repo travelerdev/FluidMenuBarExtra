@@ -251,10 +251,7 @@ public struct FluidMenuBarExtra<Content: View>: Scene {
                                                            alignment: alignment,
                                                            screenClippingBehaviour: screenClippingBehaviour)
         }
-
-        let emptyScene = SceneBuilder.buildBlock()
-
-        return emptyScene.onChange(of: isInserted) { state.statusItem?.isVisible = $0 }
+        SceneBuilder.buildBlock().onChange(of: isInserted) { state.statusItem?.isVisible = $0 }
     }
 }
 

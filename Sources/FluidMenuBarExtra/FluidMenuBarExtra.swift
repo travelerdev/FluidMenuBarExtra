@@ -254,7 +254,7 @@ public struct FluidMenuBarExtra<Content: View>: Scene {
 
         return WindowGroup {
             EmptyView()
-        }.hidden().onChange(of: isInserted) { state.statusItem?.isVisible = $0 }
+        }.onChange(of: isInserted) { state.statusItem?.isVisible = $0 }
     }
 }
 

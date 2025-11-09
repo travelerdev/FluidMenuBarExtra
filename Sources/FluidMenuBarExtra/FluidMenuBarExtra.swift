@@ -252,8 +252,9 @@ public struct FluidMenuBarExtra<Content: View>: Scene {
                                                            screenClippingBehaviour: screenClippingBehaviour)
         }
 
-        return WindowGroup {
+        return WindowGroup(id: UUID().uuidString) {
             EmptyView()
+                .hidden()
         }.onChange(of: isInserted) { state.statusItem?.isVisible = $0 }
     }
 }

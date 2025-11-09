@@ -86,6 +86,23 @@ public struct FluidMenuBarExtra<Content: View>: Scene {
         if .default == animation {
             print("Warning: it is unwise to use the `default` window animation style with FluidMenuBarExtra, as its meaning may change in future versions of the package.  Use `none` instead.")
         }
+
+        if let statusItem = state.statusItem {
+            statusItem.menu = menu
+            statusItem.alignment = alignment
+            statusItem.screenClippingBehaviour = screenClippingBehaviour
+            statusItem.window.animationBehavior = animation
+        } else {
+            state.statusItem = FluidMenuBarExtraStatusItem(title: title,
+                                                           image: image,
+                                                           isInserted: $isInserted,
+                                                           window: FluidMenuBarExtraWindow(title: title,
+                                                                                           animation: animation,
+                                                                                           content: content),
+                                                           menu: menu,
+                                                           alignment: alignment,
+                                                           screenClippingBehaviour: screenClippingBehaviour)
+        }
     }
 
     /// - Parameters:
@@ -235,22 +252,6 @@ public struct FluidMenuBarExtra<Content: View>: Scene {
     }
 
     public var body: some Scene {
-        if let statusItem = state.statusItem {
-            statusItem.menu = menu
-            statusItem.alignment = alignment
-            statusItem.screenClippingBehaviour = screenClippingBehaviour
-            statusItem.window.animationBehavior = animation
-        } else {
-            state.statusItem = FluidMenuBarExtraStatusItem(title: title,
-                                                           image: image,
-                                                           isInserted: $isInserted,
-                                                           window: FluidMenuBarExtraWindow(title: title,
-                                                                                           animation: animation,
-                                                                                           content: content),
-                                                           menu: menu,
-                                                           alignment: alignment,
-                                                           screenClippingBehaviour: screenClippingBehaviour)
-        }
         SceneBuilder.buildBlock().onChange(of: isInserted) { state.statusItem?.isVisible = $0 }
     }
 }
